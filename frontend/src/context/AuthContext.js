@@ -27,7 +27,7 @@ export const AuthProvider = ({ children }) => {
     }
   }, [token]);
 
-  const fetchCurrentUser = async () => {
+  const fetchCurrentUser = useCallback(async () => {
     try {
       const response = await axios.get(`${API}/auth/me`, {
         headers: { Authorization: `Bearer ${token}` }
