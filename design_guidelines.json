@@ -1,0 +1,163 @@
+{
+  "identity": {
+    "persona": "E1",
+    "mission": "Create a 'Shopify for Restaurants' that blends professional SaaS efficiency with the vibrant soul of Indian hospitality.",
+    "principles": [
+      "Fusion over Imitation: Mix Swiss grid precision with Indian color warmth.",
+      "Emotion First: B2B doesn't mean boring. The dashboard should feel empowering, not just functional.",
+      "Content is King: Food photos are the heroes. Typography frames them.",
+      "Zoom In: Use macro shots of textures (spices, fabrics) for backgrounds.",
+      "Negative Space: Critical for the dashboard to prevent cognitive overload."
+    ]
+  },
+  "design_system": {
+    "typography": {
+      "headings": {
+        "family": "Yeseva One, serif",
+        "usage": "Main landing page headlines, Storefront restaurant names, Feature highlights",
+        "weights": ["400"],
+        "letter_spacing": "tracking-wide"
+      },
+      "body": {
+        "family": "Outfit, sans-serif",
+        "usage": "Dashboard UI, Menu items, Form inputs, Long text",
+        "weights": ["300", "400", "500", "600", "700"],
+        "letter_spacing": "tracking-normal"
+      },
+      "mono": {
+        "family": "JetBrains Mono, monospace",
+        "usage": "Order IDs, API keys, Code snippets",
+        "weights": ["400"]
+      }
+    },
+    "colors": {
+      "palette": {
+        "primary": {
+          "name": "Saffron Blaze",
+          "hex": "#F05A28",
+          "usage": "Primary CTAs, Active states, Highlights"
+        },
+        "secondary": {
+          "name": "Peacock Teal",
+          "hex": "#0F766E",
+          "usage": "Secondary buttons, Success states, B2B branding"
+        },
+        "accent": {
+          "name": "Marigold",
+          "hex": "#F59E0B",
+          "usage": "Warnings, Stars/Ratings, Special offers"
+        },
+        "neutral": {
+          "bg_light": "#FFFCF5",
+          "bg_dark": "#1F2937",
+          "text_primary": "#111827",
+          "text_secondary": "#4B5563",
+          "border": "#E5E7EB"
+        }
+      },
+      "gradients": {
+        "hero": "linear-gradient(135deg, #FFF8E1 0%, #FFEDD5 100%)",
+        "glass": "rgba(255, 255, 255, 0.7)"
+      }
+    },
+    "spacing": {
+      "scale": ["0", "1", "2", "4", "6", "8", "12", "16", "20", "24", "32", "40", "48", "64"],
+      "container_padding": "p-6 md:p-12 lg:p-20",
+      "grid_gap": "gap-6 md:gap-8"
+    },
+    "shadows": {
+      "card": "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
+      "hover": "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
+      "glow": "0 0 15px rgba(240, 90, 40, 0.3)"
+    },
+    "border_radius": {
+      "default": "rounded-xl",
+      "card": "rounded-2xl",
+      "button": "rounded-full"
+    }
+  },
+  "components": {
+    "buttons": {
+      "primary": "bg-[#F05A28] hover:bg-[#C2410C] text-white font-medium rounded-full px-8 py-3 transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5",
+      "secondary": "bg-white border-2 border-[#0F766E] text-[#0F766E] hover:bg-[#0F766E] hover:text-white font-medium rounded-full px-8 py-3 transition-all",
+      "ghost": "text-[#4B5563] hover:text-[#F05A28] hover:bg-orange-50 font-medium rounded-lg px-4 py-2 transition-all"
+    },
+    "cards": {
+      "base": "bg-white rounded-2xl border border-orange-100 shadow-sm hover:shadow-md transition-all duration-300",
+      "glass": "bg-white/80 backdrop-blur-md border border-white/20 shadow-lg rounded-2xl"
+    },
+    "inputs": {
+      "base": "bg-white border border-gray-200 focus:border-[#F05A28] focus:ring-2 focus:ring-orange-100 rounded-lg px-4 py-3 outline-none transition-all w-full"
+    },
+    "badges": {
+      "status_success": "bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider",
+      "status_pending": "bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider",
+      "status_error": "bg-red-100 text-red-800 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider"
+    }
+  },
+  "layouts": {
+    "bento_grid": {
+      "wrapper": "grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 auto-rows-[minmax(180px,auto)]",
+      "item_hero": "col-span-1 md:col-span-2 lg:col-span-2 row-span-2",
+      "item_tall": "col-span-1 row-span-2",
+      "item_standard": "col-span-1 row-span-1"
+    },
+    "dashboard": {
+      "wrapper": "flex h-screen bg-[#FFFCF5]",
+      "sidebar": "w-64 bg-white border-r border-gray-200 hidden md:flex flex-col",
+      "main": "flex-1 overflow-y-auto p-8"
+    }
+  },
+  "assets": {
+    "images": {
+      "hero_food_spread": "https://images.pexels.com/photos/9619560/pexels-photo-9619560.jpeg",
+      "chef_cooking": "https://images.unsplash.com/photo-1589293053074-e5499abade96?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2NDF8MHwxfHNlYXJjaHwyfHxtb2Rlcm4lMjByZXN0YXVyYW50JTIwa2l0Y2hlbiUyMGNoZWYlMjBjb29raW5nfGVufDB8fHx8MTc2OTI3MDA0N3ww&ixlib=rb-4.1.0&q=85",
+      "restaurant_owner": "https://images.pexels.com/photos/4473496/pexels-photo-4473496.jpeg",
+      "delivery_scooter": "https://images.unsplash.com/photo-1758956934245-8daff43eb1e4?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1ODh8MHwxfHNlYXJjaHwxfHxmb29kJTIwZGVsaXZlcnklMjBzY29vdGVyJTIwY2l0eXxlbnwwfHx8fDE3NjkyNzAwNTZ8MA&ixlib=rb-4.1.0&q=85",
+      "placeholder_food": "https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg"
+    },
+    "icons": "Use lucide-react for all UI icons. Use simple, stroke-based icons."
+  },
+  "page_specific_guidelines": {
+    "landing_page": {
+      "strategy": "High impact, storytelling. Use 'Yeseva One' for big statements. Use the 'Bento' grid to show features (Analytics, Menu, Orders) in a single view.",
+      "sections": [
+        "Hero: Big headline, 'Get Started' CTA, 3D-ish mockup of the dashboard.",
+        "Features: Bento grid layout.",
+        "Testimonials: Carousel of happy restaurant owners.",
+        "Pricing: Clean cards with 'Most Popular' highlighted in Saffron."
+      ]
+    },
+    "dashboard_b2b": {
+      "strategy": "Density and Clarity. White background for data containers. Use 'Outfit' for numbers. Sidebar nav.",
+      "key_elements": [
+        "Stats Cards: Simple, big numbers, sparkline charts.",
+        "Orders Table: High density, clear status badges.",
+        "Menu Editor: Split view (List on left, Edit form on right). Support for variants (Half/Full)."
+      ]
+    },
+    "storefront_b2c": {
+      "strategy": "Appetizing and Fast. Mobile-first. Big images.",
+      "key_elements": [
+        "Restaurant Header: Hero image, logo, rating, delivery time.",
+        "Menu Categories: Horizontal scroll pill badges.",
+        "Food Item: Image on right, text on left. 'Add' button with counter."
+      ]
+    }
+  },
+  "universal_guidelines": {
+    "general": [
+      "Do not use generic centered layouts.",
+      "Create depth through layered design elements with z-index hierarchy.",
+      "Use glass-morphism effects with backdrop filters (12-24px blur).",
+      "Every interaction needs micro-animations.",
+      "Use 2-3x more spacing than feels comfortable.",
+      "All interactive elements MUST include data-testid attribute."
+    ],
+    "accessibility": [
+      "Ensure text contrast ratio of 4.5:1.",
+      "Focus states must be visible.",
+      "Use semantic HTML."
+    ]
+  }
+}
