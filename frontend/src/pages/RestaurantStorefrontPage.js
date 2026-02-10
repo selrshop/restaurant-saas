@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Button } from '../components/ui/button';
@@ -24,13 +24,7 @@ const RestaurantStorefrontPage = () => {
   const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
   const API = `${BACKEND_URL}/api`;
 
-  useEffect(() => {
-    if (slug) {
-      fetchRestaurantData();
-    }
-  }, [slug]);
-
-  const fetchRestaurantData = async () => {
+  const fetchRestaurantData = useCallback(async () => {
     try {
       setLoading(true);
       const restaurantRes = await axios.get(`${API}/restaurants/slug/${slug}`);
@@ -51,7 +45,13 @@ const RestaurantStorefrontPage = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [API, slug, navigate]);
+
+  useEffect(() => {
+    if (slug) {
+      fetchRestaurantData();
+    }
+  }, [slug, fetchRestaurantData]);
 
   const addToCart = async (menuItemId, variant) => {
     if (!isAuthenticated) {

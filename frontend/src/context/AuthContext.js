@@ -19,13 +19,11 @@ export const AuthProvider = ({ children }) => {
   const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
   const API = `${BACKEND_URL}/api`;
 
-  useEffect(() => {
-    if (token) {
-      fetchCurrentUser();
-    } else {
-      setLoading(false);
-    }
-  }, [token]);
+  const logout = useCallback(() => {
+    localStorage.removeItem('token');
+    setToken(null);
+    setUser(null);
+  }, []);
 
   const fetchCurrentUser = useCallback(async () => {
     try {
@@ -39,7 +37,15 @@ export const AuthProvider = ({ children }) => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [API, token, logout]);
+
+  useEffect(() => {
+    if (token) {
+      fetchCurrentUser();
+    } else {
+      setLoading(false);
+    }
+  }, [token, fetchCurrentUser]);
 
   const login = async (email, password) => {
     const response = await axios.post(`${API}/auth/login`, { email, password });
@@ -62,12 +68,6 @@ export const AuthProvider = ({ children }) => {
     setToken(newToken);
     setUser(userData);
     return userData;
-  };
-
-  const logout = () => {
-    localStorage.removeItem('token');
-    setToken(null);
-    setUser(null);
   };
 
   const value = {

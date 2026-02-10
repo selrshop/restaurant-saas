@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Button } from '../components/ui/button';
@@ -14,15 +14,7 @@ const OrdersPage = () => {
   const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
   const API = `${BACKEND_URL}/api`;
 
-  useEffect(() => {
-    if (!isAuthenticated) {
-      navigate('/');
-      return;
-    }
-    fetchOrders();
-  }, [isAuthenticated]);
-
-  const fetchOrders = async () => {
+  const fetchOrders = useCallback(async () => {
     try {
       const response = await axios.get(`${API}/orders`, {
         headers: { Authorization: `Bearer ${token}` }
@@ -33,7 +25,15 @@ const OrdersPage = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [API, token]);
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate('/');
+      return;
+    }
+    fetchOrders();
+  }, [isAuthenticated, navigate, fetchOrders]);
 
   const getStatusIcon = (status) => {
     switch (status) {

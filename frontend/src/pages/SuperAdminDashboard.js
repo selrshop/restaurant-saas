@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Button } from '../components/ui/button';
@@ -16,11 +16,29 @@ const SuperAdminDashboard = () => {
   const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
   const API = `${BACKEND_URL}/api`;
 
-  useEffect(() => {
-    checkAuth();
-  }, []);
+  const fetchData = useCallback(async () => {
+    try {
+      const token = localStorage.getItem('token');
+      const [analyticsRes, restaurantsRes] = await Promise.all([
+        axios.get(`${API}/admin/analytics`, {
+          headers: { Authorization: `Bearer ${token}` }
+        }),
+        axios.get(`${API}/restaurants`, {
+          headers: { Authorization: `Bearer ${token}` }
+        })
+      ]);
 
-  const checkAuth = async () => {
+      setAnalytics(analyticsRes.data);
+      setRestaurants(restaurantsRes.data);
+    } catch (error) {
+      console.error('Failed to fetch data:', error);
+      toast.error('Failed to load data');
+    } finally {
+      setLoading(false);
+    }
+  }, [API]);
+
+  const checkAuth = useCallback(async () => {
     try {
       const token = localStorage.getItem('token');
       if (!token) {
@@ -43,29 +61,11 @@ const SuperAdminDashboard = () => {
       console.error('Auth check failed:', error);
       navigate('/login');
     }
-  };
+  }, [API, navigate, fetchData]);
 
-  const fetchData = async () => {
-    try {
-      const token = localStorage.getItem('token');
-      const [analyticsRes, restaurantsRes] = await Promise.all([
-        axios.get(`${API}/admin/analytics`, {
-          headers: { Authorization: `Bearer ${token}` }
-        }),
-        axios.get(`${API}/restaurants`, {
-          headers: { Authorization: `Bearer ${token}` }
-        })
-      ]);
-
-      setAnalytics(analyticsRes.data);
-      setRestaurants(restaurantsRes.data);
-    } catch (error) {
-      console.error('Failed to fetch data:', error);
-      toast.error('Failed to load data');
-    } finally {
-      setLoading(false);
-    }
-  };
+  useEffect(() => {
+    checkAuth();
+  }, [checkAuth]);
 
   const handleApprove = async (restaurantId) => {
     try {

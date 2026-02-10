@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Button } from '../components/ui/button';
@@ -17,11 +17,7 @@ const HomePage = () => {
   const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
   const API = `${BACKEND_URL}/api`;
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     try {
       const [categoriesRes, featuredRes] = await Promise.all([
         axios.get(`${API}/menu/categories`),
@@ -34,7 +30,11 @@ const HomePage = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [API]);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
 
   const getSpiceLevel = (level) => {
     return Array(level).fill('🌶️').join('');

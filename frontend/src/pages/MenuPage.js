@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import axios from 'axios';
 import { Button } from '../components/ui/button';
@@ -27,24 +27,16 @@ const MenuPage = () => {
   const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
   const API = `${BACKEND_URL}/api`;
 
-  useEffect(() => {
-    fetchCategories();
-  }, []);
-
-  useEffect(() => {
-    fetchMenuItems();
-  }, [selectedCategory, isVeg, spiceLevel, searchQuery]);
-
-  const fetchCategories = async () => {
+  const fetchCategories = useCallback(async () => {
     try {
       const response = await axios.get(`${API}/menu/categories`);
       setCategories(response.data);
     } catch (error) {
       console.error('Failed to fetch categories:', error);
     }
-  };
+  }, [API]);
 
-  const fetchMenuItems = async () => {
+  const fetchMenuItems = useCallback(async () => {
     try {
       setLoading(true);
       const params = new URLSearchParams();
@@ -60,7 +52,15 @@ const MenuPage = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [API, selectedCategory, isVeg, spiceLevel, searchQuery]);
+
+  useEffect(() => {
+    fetchCategories();
+  }, [fetchCategories]);
+
+  useEffect(() => {
+    fetchMenuItems();
+  }, [fetchMenuItems]);
 
   const handleSearch = (e) => {
     e.preventDefault();

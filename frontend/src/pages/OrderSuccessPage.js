@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import axios from 'axios';
 import { Button } from '../components/ui/button';
@@ -18,15 +18,7 @@ const OrderSuccessPage = () => {
   const API = `${BACKEND_URL}/api`;
   const MAX_POLLING_ATTEMPTS = 5;
 
-  useEffect(() => {
-    if (!sessionId) {
-      navigate('/');
-      return;
-    }
-    checkPaymentStatus();
-  }, [sessionId, pollingAttempts]);
-
-  const checkPaymentStatus = async () => {
+  const checkPaymentStatus = useCallback(async () => {
     if (pollingAttempts >= MAX_POLLING_ATTEMPTS) {
       setStatus('timeout');
       return;
@@ -52,7 +44,15 @@ const OrderSuccessPage = () => {
       console.error('Failed to check payment status:', error);
       setStatus('failed');
     }
-  };
+  }, [API, sessionId, token, pollingAttempts, MAX_POLLING_ATTEMPTS]);
+
+  useEffect(() => {
+    if (!sessionId) {
+      navigate('/');
+      return;
+    }
+    checkPaymentStatus();
+  }, [sessionId, navigate, checkPaymentStatus]);
 
   return (
     <div className="min-h-screen bg-background flex items-center justify-center py-16 px-4" data-testid="order-success-page">

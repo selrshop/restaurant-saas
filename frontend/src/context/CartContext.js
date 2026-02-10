@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { useAuth } from './AuthContext';
 import { toast } from 'sonner';
@@ -21,15 +21,7 @@ export const CartProvider = ({ children }) => {
   const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
   const API = `${BACKEND_URL}/api`;
 
-  useEffect(() => {
-    if (isAuthenticated) {
-      fetchCart();
-    } else {
-      setCartItems([]);
-    }
-  }, [isAuthenticated]);
-
-  const fetchCart = async () => {
+  const fetchCart = useCallback(async () => {
     if (!token) return;
     try {
       setLoading(true);
@@ -42,7 +34,15 @@ export const CartProvider = ({ children }) => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [token, API]);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      fetchCart();
+    } else {
+      setCartItems([]);
+    }
+  }, [isAuthenticated, fetchCart]);
 
   const addToCart = async (menuItemId, quantity = 1) => {
     if (!token) {
